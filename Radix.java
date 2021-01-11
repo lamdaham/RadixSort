@@ -8,6 +8,10 @@ public class Radix {
 		return (""+n).length();
 	}
 
-	
+	public static void merge(MyLinkedList original, MyLinkedList[] buckets) {
+		for (int i = 0; i<buckets.length ; i++ ) {
+			original.extends(buckets[i]);	
+		}
+	}
 
 }
