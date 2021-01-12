@@ -42,8 +42,7 @@ public class Radix extends SortableLinkedList{
 			merge(data, bucket);
 		}
 	}
-
-
+	
 	public static void radixSort(SortableLinkedList data) {
 		SortableLinkedList positives = new SortableLinkedList();
 		SortableLinkedList negatives = new SortableLinkedList();
@@ -64,5 +63,6 @@ public class Radix extends SortableLinkedList{
 		data.extend(positives);
 
 	}
+
 
 }
