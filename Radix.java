@@ -31,11 +31,13 @@ public class Radix extends SortableLinkedList{
 		int maxLength = 0;
 		boolean max = true;
 		for(int counter=0;counter<=maxLength; counter++){
-			for (int i = 0; i<data.size(); i = 0) {
+			// int passes = 0;
+			while (data.size()>0) {
 				if (max && length(data.get(0))>maxLength) {
 					maxLength = length(data.get(0));
 				}
 				(bucket[Math.abs(nth(data.get(0), counter))]).add(data.remove(0));
+				// passes++;
 			}
 			max = false;
 			merge(data, bucket);
