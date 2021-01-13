@@ -21,34 +21,56 @@ public class Radix extends SortableLinkedList{
 		}
 	}
 
+	public static void reverseMerge(SortableLinkedList original, SortableLinkedList[] buckets) {
+		for (int i = buckets.length-1; i>0 ; i-- ) {
+			if (buckets[i]!=null) {
+				original.extend(buckets[i]);	
+			}	
+		}
+	}
+
 
 	public static void radixSortSimple(SortableLinkedList data) {
 		SortableLinkedList[] bucket = new SortableLinkedList[10];
-		SortableLinkedList trash = new SortableLinkedList();
 		for (int i= 0;i<10 ;i++ ) {
 			bucket[i] = new SortableLinkedList();
 		}
 		int maxLength = 0;
 		boolean max = true;
-		for(int counter=0;counter<=maxLength; counter++){
-			// int passes = 0;
-			while (data.size()>0) {
-				if (max && length(data.get(0))>maxLength) {
-					maxLength = length(data.get(0));
+		if (data.get(0)>=0) {
+			for(int counter=0;counter<=maxLength; counter++){
+				// int passes = 0;
+				while (data.size()>0) {
+					if (max && length(data.get(0))>maxLength) {
+						maxLength = length(data.get(0));
+					}
+					(bucket[Math.abs(nth(data.get(0), counter))]).add(data.remove(0));
+					// passes++;
 				}
-				(bucket[Math.abs(nth(data.get(0), counter))]).add(data.remove(0));
-				// passes++;
+				max = false;
+				merge(data, bucket);
 			}
-			max = false;
-			merge(data, bucket);
-		}
+		} else {
+			for(int counter=0;counter<=maxLength; counter++){
+				// int passes = 0;
+				while (data.size()>0) {
+					if (max && length(data.get(0))>maxLength) {
+						maxLength = length(data.get(0));
+					}
+					(bucket[Math.abs(nth(data.get(0), counter))]).add(data.remove(0));
+					// passes++;
+				}
+				max = false;
+				reverseMerge(data, bucket);
+			}
+		}	
 	}
 	
 	public static void radixSort(SortableLinkedList data) {
 		SortableLinkedList positives = new SortableLinkedList();
 		SortableLinkedList negatives = new SortableLinkedList();
 		SortableLinkedList trash = new SortableLinkedList();
-		for(int i = 0; i<data.size(); i=0) {
+		while (data.size()>0) {
 			if (data.get(0)>=0) {
 				positives.add(data.remove(0));
 			} else {
@@ -59,7 +81,7 @@ public class Radix extends SortableLinkedList{
 		// System.out.println(negatives);
 		radixSortSimple(positives);
 		radixSortSimple(negatives);
-		for (int i = 0;i<negatives.size();i=0) {
+		while (negatives.size()>0) {
 			data.add(0, negatives.remove(0));
 		}
 		data.extend(positives);
